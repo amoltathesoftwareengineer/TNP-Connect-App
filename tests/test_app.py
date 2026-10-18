@@ -13,10 +13,11 @@ class TNPConnectAppTests(unittest.TestCase):
     def test_home_page_loads(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
+        self.assertIn(b"TNP Connect", response.data)
 
-    def test_students_page_route(self):
-        response = self.client.get("/students")
-        self.assertEqual(response.status_code, 405)
+    def test_unknown_page_returns_404(self):
+        response = self.client.get("/this-page-does-not-exist")
+        self.assertEqual(response.status_code, 404)
 
 
 if __name__ == "__main__":
