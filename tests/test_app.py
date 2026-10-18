@@ -15,6 +15,11 @@ class TNPConnectAppTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"TNP Connect", response.data)
 
+    def test_health_check(self):
+        response = self.client.get("/health")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"status": "healthy"})
+
     def test_unknown_page_returns_404(self):
         response = self.client.get("/this-page-does-not-exist")
         self.assertEqual(response.status_code, 404)
