@@ -47,6 +47,10 @@ def home():
         jobs=jobs,
     )
 
+# Health Check Endpoint
+@app.route("/health")
+def health_check():
+    return {"status": "healthy"}, 200
 
 # Register Student
 @app.route("/students", methods=["POST"])
