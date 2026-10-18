@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNP Connect App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>🎓 TNP Connect</h1>
+        <p>Student Placement Management Portal</p>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="message">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <section class="card">
+            <h2>Register Student</h2>
+            <form action="{{ url_for('add_student') }}" method="POST">
+                <input name="name" placeholder="Student name" required>
+                <input name="email" type="email" placeholder="Email address" required>
+                <input name="department" placeholder="Department" required>
+                <button type="submit">Add Student</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>Post a Job</h2>
+            <form action="{{ url_for('add_job') }}" method="POST">
+                <input name="company" placeholder="Company name" required>
+                <input name="title" placeholder="Job title" required>
+                <input name="eligibility" placeholder="Eligibility criteria">
+                <button type="submit">Publish Job</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>Registered Students</h2>
+            {% if students %}
+                {% for student in students %}
+                    <article class="item">
+                        <strong>{{ student.name }}</strong>
+                        <p>{{ student.email }} | {{ student.department }}</p>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <p>No students registered yet.</p>
+            {% endif %}
+        </section>
+
+        <section class="card">
+            <h2>Available Jobs</h2>
+            {% if jobs %}
+                {% for job in jobs %}
+                    <article class="item">
+                        <strong>{{ job.title }}</strong>
+                        <p>{{ job.company }}</p>
+                        <p>Eligibility: {{ job.eligibility }}</p>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <p>No job postings available yet.</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>TNP Connect App | Student Placement Portal</p>
+    </footer>
+</body>
+</html>
