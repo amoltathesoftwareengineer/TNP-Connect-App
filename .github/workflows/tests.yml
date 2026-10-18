@@ -21,5 +21,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Set Python path
+        run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+
+      - name: Check project files
+        run: ls -la
+
       - name: Run tests
-        run: pytest
+        run: python -m pytest -v
